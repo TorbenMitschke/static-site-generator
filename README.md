@@ -1,4 +1,4 @@
-# Static Site Generator: wip
+# Static Site Generator: Convert Markdown to HTML
 
 ## Project Overview
 
