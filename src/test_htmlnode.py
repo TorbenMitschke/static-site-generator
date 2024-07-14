@@ -20,10 +20,13 @@ class TestHTMLNode(unittest.TestCase):
         html_a = HTMLNode("a", "click here", None, {"href": "https://github.com/TorbenMitschke", "target": "_blank"})
         html_h1 = HTMLNode("h1", "This is a heading 1.", None, None)
         html_node = HTMLNode("p", "This is a paragraph.", [html_a, html_h1], {"id": "paragraph1", "class": "text-muted", "lang": "en"})
-        self.assertEqual(repr(html_node),
+        self.assertEqual(html_node.__repr__(),
                          "HTMLNode(p, This is a paragraph., [HTMLNode(a, click here, None, {'href': 'https://github.com/TorbenMitschke', 'target': '_blank'}), HTMLNode(h1, This is a heading 1., None, None)], {'id': 'paragraph1', 'class': 'text-muted', 'lang': 'en'})")
 
     def test_repr_not_eq(self):
         html_node = HTMLNode( tag="a", props={"href": "https://github.com/TorbenMitschke", "target": "_blank"})
         html_node2 = HTMLNode("h1", "This is a heading", None, None)
         self.assertNotEqual(repr(html_node), repr(html_node2))
+
+if __name__ == "__main__":
+    unittest.main()
