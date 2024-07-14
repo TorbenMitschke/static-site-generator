@@ -28,5 +28,11 @@ class TestHTMLNode(unittest.TestCase):
         html_node2 = HTMLNode("h1", "This is a heading", None, None)
         self.assertNotEqual(repr(html_node), repr(html_node2))
 
+    def test_values(self):
+        html_node = HTMLNode("a", "click here", None, {"href": "https://github.com/TorbenMitschke", "target": "_blank"})
+        self.assertEqual(html_node.tag, "a")
+        self.assertEqual(html_node.value, "click here")
+        self.assertEqual(html_node.children, None)
+
 if __name__ == "__main__":
     unittest.main()
