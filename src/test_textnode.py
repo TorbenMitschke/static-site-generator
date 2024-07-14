@@ -32,9 +32,9 @@ class TestTextNode(unittest.TestCase):
         node2 = TextNode("I am a text node as well", text_type_code, "https://github.com/TorbenMitschke")
         self.assertEqual(node, node2)
 
-    def test_repr(self):
+    def test_repr_eq(self):
         node = TextNode("I am a text node as well", "italic", "https://github.com/TorbenMitschke")
-        self.assertNotEqual("I am a text node as well, italic, https://github.com/TorbenMitschke", repr(node))
+        self.assertEqual("TextNode(I am a text node as well, italic, https://github.com/TorbenMitschke)", repr(node))
 
 if __name__ == "__main__":
     unittest.main()
