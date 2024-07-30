@@ -11,7 +11,7 @@ class HTMLNode:
     def props_to_html(self) -> str:
         if self.props == None:
             return ""
-        return " ".join(map(lambda item: f'{item[0]}="{item[1]}"', self.props.items()))
+        return "".join(map(lambda item: f' {item[0]}="{item[1]}"', self.props.items()))
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({self.tag}, {self.value}, {self.children}, {self.props})"
@@ -23,14 +23,10 @@ class LeafNode(HTMLNode):
 
     def to_html(self) -> str:
         if self.value == None:
-            raise ValueError("Value property of LeafNode class is not set.")
-
+            raise ValueError("Invalid HTML: No value")
         if self.tag == None:
             return self.value
+        return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
 
-        if self.props_to_html() == "":
-            props_as_str = ""
-        else:
-            props_as_str = " " + self.props_to_html()
-
-        return f"<{self.tag}{props_as_str}>{self.value}</{self.tag}>"
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}({self.tag}, {self.value}, {self.props})"
