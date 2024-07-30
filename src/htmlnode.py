@@ -14,7 +14,7 @@ class HTMLNode:
         return "".join(map(lambda item: f' {item[0]}="{item[1]}"', self.props.items()))
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}({self.tag}, {self.value}, {self.children}, {self.props})"
+        return f"{self.__class__.__name__}({self.tag}, {self.value}, children: {self.children}, {self.props})"
 
 
 class LeafNode(HTMLNode):
