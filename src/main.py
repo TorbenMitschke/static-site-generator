@@ -1,5 +1,5 @@
 from textnode import TextNode, text_type_italic, text_type_link
-from leafnode import LeafNode
+from htmlnode import LeafNode
 
 def main():
     text_node = TextNode("I am a text node", text_type_link, "https://www.markdownguide.org")
