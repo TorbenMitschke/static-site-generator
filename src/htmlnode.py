@@ -41,7 +41,7 @@ class ParentNode(HTMLNode):
             raise ValueError("Invalid HTML: No tag")
         if self.children == None:
             raise ValueError("Invalid HTML: Parent node must have children") #TODO: Refine error message
-        return f"<{self.tag}>{"".join(map(lambda child: child.to_html(), self.children))}</{self.tag}>"
+        return f"<{self.tag}{self.props_to_html()}>{"".join(map(lambda child: child.to_html(), self.children))}</{self.tag}>"
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({self.tag}, children: {self.children}, {self.props})"

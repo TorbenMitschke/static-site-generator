@@ -1,6 +1,6 @@
 import unittest
 
-from htmlnode import HTMLNode, LeafNode
+from htmlnode import HTMLNode, LeafNode, ParentNode
 
 class TestHTMLNode(unittest.TestCase):
     def test_props(self):
@@ -35,7 +35,7 @@ class TestHTMLNode(unittest.TestCase):
         self.assertEqual(html_node.value, "click here")
         self.assertEqual(html_node.children, None)
 
-# LeafNode class
+    # LeafNode class
     def test_to_html_valid(self):
         leafnode = LeafNode("a", "click here", {"href": "https://github.com/TorbenMitschke", "target": "_blank"})
 
@@ -49,7 +49,7 @@ class TestHTMLNode(unittest.TestCase):
 
         with self.assertRaises(ValueError) as context:
             leafnode.to_html()
-            self.assertEqual(str(context.exception), "Value property of LeafNode class is not set.")
+            self.assertEqual(str(context.exception), "Invalid HTML: No value")
 
     def test_to_html_equal(self):
         leafnode = LeafNode("a", "click here", {"href": "https://github.com/TorbenMitschke", "target": "_blank"})
@@ -66,6 +66,31 @@ class TestHTMLNode(unittest.TestCase):
     def test_to_html_no_children(self):
         leafnode = LeafNode("p", "Hello World!")
         self.assertEqual(leafnode.to_html(), "<p>Hello World!</p>")
+
+
+    # ParentNode class
+    def test_to_html_with_children(self):
+        leaf_node1 = LeafNode("b", "bold text")
+        leaf_node2 = LeafNode(None, "normal text")
+        leaf_node3 = LeafNode("i", "italic text")
+        leaf_node4 = LeafNode(None, "normal text")
+        parent_node = ParentNode("p", [leaf_node1, leaf_node2, leaf_node3, leaf_node3,leaf_node4], {"id": "paragraph1", "class": "text-muted", "lang": "en"})
+        self.assertEqual(parent_node.to_html(), '<p id="paragraph1" class="text-muted" lang="en"><b>bold text</b>normal text<i>italic text</i><i>italic text</i>normal text</p>')
+
+    def test_to_html_with_parent_child(self):
+        leaf_node1 = LeafNode("a", "Leaf Node 1", {"href": "https://github.com/TorbenMitschke"})
+        leaf_node2 = LeafNode("li", "Leaf Node 2")
+        leaf_node3 = LeafNode("li", "Leaf Node 3")
+        parent_node1 = ParentNode("ul", [leaf_node2, leaf_node3], {"id": "nested-parent"})
+        parent_node2 = ParentNode("div", [leaf_node1, parent_node1], {"id": "parent-node"})
+        self.assertEqual(parent_node2.to_html(), '<div id="parent-node"><a href="https://github.com/TorbenMitschke">Leaf Node 1</a><ul id="nested-parent"><li>Leaf Node 2</li><li>Leaf Node 3</li></ul></div>')
+
+    def test_to_html_parent_within_parent(self):
+        leaf_node = LeafNode("span", "Leaf Node")
+        parent_node1 = ParentNode("div", [leaf_node])
+        parent_node2 = ParentNode("div", [parent_node1])
+        parent_node3 = ParentNode("div", [parent_node2])
+        self.assertEqual(parent_node3.to_html(), "<div><div><div><span>Leaf Node</span></div></div></div>")
 
 if __name__ == "__main__":
     unittest.main()
