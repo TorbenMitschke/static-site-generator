@@ -21,7 +21,8 @@ class TestHTMLNode(unittest.TestCase):
         html_h1 = HTMLNode("h1", "This is a heading 1.", None, None)
         html_node = HTMLNode("p", "This is a paragraph.", [html_a, html_h1], {"id": "paragraph1", "class": "text-muted", "lang": "en"})
         self.assertEqual(html_node.__repr__(),
-                         "HTMLNode(p, This is a paragraph., children: [HTMLNode(a, click here, children: None, {'href': 'https://github.com/TorbenMitschke', 'target': '_blank'}), HTMLNode(h1, This is a heading 1., children: None, None)], {'id': 'paragraph1', 'class': 'text-muted', 'lang': 'en'})")
+                         "HTMLNode(p, This is a paragraph., children: [HTMLNode(a, click here, children: None, {'href': 'https://github.com/TorbenMitschke', "\
+                         "'target': '_blank'}), HTMLNode(h1, This is a heading 1., children: None, None)], {'id': 'paragraph1', 'class': 'text-muted', 'lang': 'en'})")
 
     def test_repr_not_eq(self):
         html_node = HTMLNode( tag="a", props={"href": "https://github.com/TorbenMitschke", "target": "_blank"})
