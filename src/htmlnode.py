@@ -18,8 +18,8 @@ class HTMLNode:
 
 
 class LeafNode(HTMLNode):
-    def __init__(self, tag: str = None, value: str = None, props: dict = None):
-        super().__init__(tag=tag, value=value, children=None, props=props) # "value" needs to be mandatory
+    def __init__(self, tag: str, value: str, props: dict = None):
+        super().__init__(tag, value, None, props) # "children" should not be allowed
 
     def to_html(self) -> str:
         if self.value == None:
@@ -30,3 +30,18 @@ class LeafNode(HTMLNode):
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({self.tag}, {self.value}, {self.props})"
+
+
+class ParentNode(HTMLNode):
+    def __init__(self, tag: str, children: list, props: dict = None) -> None:
+        super().__init__(tag, None, children, props) # "value" should not be allowed
+
+    def to_html(self):
+        if self.tag == None:
+            raise ValueError("Invalid HTML: No tag")
+        if self.children == None:
+            raise ValueError("Invalid HTML: Parent node must have children") #TODO: Refine error message
+        return f"<{self.tag}>{"".join(map(lambda child: child.to_html(), self.children))}</{self.tag}>"
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}({self.tag}, children: {self.children}, {self.props})"
