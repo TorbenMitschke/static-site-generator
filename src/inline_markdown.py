@@ -1,6 +1,7 @@
 from textnode import TextNode, TextType
+import re
 
-# TODO: Implement logic for function follwoing the local_debug approach
+
 def split_nodes_delimiter(old_nodes: list, delimiter: str, text_type: TextType) -> list:
     new_nodes = []
     for node in old_nodes:
@@ -20,3 +21,9 @@ def split_nodes_delimiter(old_nodes: list, delimiter: str, text_type: TextType) 
                 split_nodes.append(TextNode(section[i], text_type))
         new_nodes.extend(split_nodes)
     return new_nodes
+
+def extract_markdown_images(text) -> list:
+    return re.findall(r"!\[(.*?)\]\((.*?)\)", text)
+
+def extract_markdown_links(text) -> list:
+    return re.findall(r"\[(.*?)\]\((.*?)\)", text)
