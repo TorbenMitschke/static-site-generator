@@ -29,14 +29,14 @@ def extract_markdown_links(text) -> list:
     return re.findall(r"\[(.*?)\]\((.*?)\)", text)
 
 def split_nodes_image(old_nodes: list) -> list:
-    #TODO: split the TextNode objects to generate a list of TextNode objects of type text and image
+    #TODO: Test cases
     new_nodes = []
     for node in old_nodes:
         new_nodes.extend(map(lambda text_and_url: TextNode(text_and_url[0], TextType.IMAGE, text_and_url[1]), extract_markdown_images(node.text)))
     return new_nodes
 
 def split_nodes_link(old_nodes: list) -> list:
-    #TODO: split the TextNode objects to generate a list of TextNode objects of type text and link
+    #TODO: Test cases
     new_nodes = []
     for node in old_nodes:
         new_nodes.extend(map(lambda text_and_url: TextNode(text_and_url[0], TextType.LINK, text_and_url[1]), extract_markdown_links(node.text)))
